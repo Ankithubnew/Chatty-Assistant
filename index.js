@@ -12,11 +12,14 @@ app.use(express.static("public"));
 
 app.get('/webhook', (req, res) => {
     const { query } = req;
+    const challenge = req.query['hub.challenge'];
+    const verify_token = req.query['hub.verify_token'];
+    const hubmode = req.query['hub.mode'];
     // const { hub.mode, hub.verify_token, hub.challenge } = query;
     console.log(query);
   
-    if (query.hub.mode === 'subscribe' && query.hub.verify_token === 'EAAbKM7FvGKUBAAEMhLZCF6pNekCzyAD2CUPZCCBL75') {
-      res.status(200).send(query.hub.challenge);
+    if (hubmode === 'subscribe' && verify_token === 'EAAbKM7FvGKUBAAEMhLZCF6pNekCzyAD2CUPZCCBL75') {
+      res.status(200).send(challenge);
     } else {
       res.sendStatus(403); 
     }
