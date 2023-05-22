@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Ankithubnew/Chatty-Assistant/issues"
   },
-  "homepage": "https://github.com/Ankithubnew/Chatty-Assistant#readme"
+  "homepage": "https://github.com/Ankithubnew/Chatty-Assistant#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
