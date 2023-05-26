@@ -64,6 +64,7 @@ app.post("/webhook",async (req,res)=>{
       console.log(user);
       if(user.credits>0){
         await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
+        //it is calling repeatidly if credit is greater than 0
         if(webhookEvent.postback && webhookEvent.postback.payload){
           console.log("payload called")
           let payload=webhookEvent.postback.payload;
@@ -115,7 +116,8 @@ app.post("/webhook",async (req,res)=>{
         }
       }else{
         console.log("bug called")
-        // sendMessage(senderId, 'Sorry, you have insufficient credits. Please Choose promo code section to restore your credits.')
+        //it is calling repeatidly if credit is less than 0
+        sendMessage(senderId, 'Sorry, you have insufficient credits. Please Choose promo code section to restore your credits.')
       }
     }else{
       sendMessage(senderId, 'User is Not here')
@@ -169,11 +171,11 @@ async function handleAimsg(sender,msg){
 // handleAimsg(123,"who are you");
 async function sendMessage(sender,msg){
   console.log("send messege called")
-  // const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
-  //   recipient: { id: sender },
-  //   message: { text: msg },
-  //   access_token: process.env.FB_Token,
-  // });
+  const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+    recipient: { id: sender },
+    message: { text: msg },
+    access_token: process.env.FB_Token,
+  });
   console.log("msg sent")
   // console.log(reqt.data);
 }
