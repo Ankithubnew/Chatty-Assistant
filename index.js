@@ -52,14 +52,14 @@ app.post("/webhook",async (req,res)=>{
     console.log("webhook"+webhookEvent);
     const senderId=webhookEvent.sender.id;
     //const queryMsg=webhookEvent.message.text;
-    // console.log("sender"+senderId,queryMsg);
+    console.log("sender"+senderId);
 
-    let user=await User.findOne({userId:senderId})
-    if(!user){
-      await User.create({userId:senderId,credits:5,payload:"CHAT_PAYLOAD"});
-      user=await User.findOne({userId:senderId})
-      console.log(user);
-    }
+    // let user=await User.findOne({userId:senderId})
+    // if(!user){
+    //   await User.create({userId:senderId,credits:5,payload:"CHAT_PAYLOAD"});
+    //   user=await User.findOne({userId:senderId})
+    //   console.log(user);
+    // }
     // if(user){
     //   if(user.credits>0){
     //     await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
