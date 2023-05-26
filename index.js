@@ -51,7 +51,8 @@ app.post("/webhook",(req,res)=>{
       const webhookEvent=entry.messaging[0];
       console.log(webhookEvent);
       const senderId=webhookEvent.sender.id;
-      const queryMsg=webhookEvent.message.text;
+      const queryMsg=webhookEvent.message.text||null;
+
       let user=await User.findOne({userId:senderId})
       if(!user){
         await User.create({userId:senderId,credits:5,payload:"CHAT_PAYLOAD"});
@@ -90,18 +91,20 @@ app.post("/webhook",(req,res)=>{
           }
           user=await User.findOne({senderId});
           console.log(user.payload);
-          if (user.payload === 'CHAT_PAYLOAD') {
-            handleAimsg(senderId,queryMsg);
-          } else if (user.payload === 'GENERATE_IMAGES_PAYLOAD') {
-            handleAimsg(senderId,queryMsg);
-          } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD') {
-            handleAimsg(senderId,queryMsg);
-          } else if (user.payload === 'GENERATE_CREDIT_PAYLOAD') {
-            handleCredit(senderId,queryMsg);
-            //sendMessage(senderId, 'You have selected to add more credit to this account. Please provide a promocode for more credit.');
-          }
-           else {
-            handleAimsg(senderId,queryMsg);
+          if(queryMsg){
+            if (user.payload === 'CHAT_PAYLOAD') {
+              handleAimsg(senderId,queryMsg);
+            } else if (user.payload === 'GENERATE_IMAGES_PAYLOAD') {
+              handleAimsg(senderId,queryMsg);
+            } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD') {
+              handleAimsg(senderId,queryMsg);
+            } else if (user.payload === 'GENERATE_CREDIT_PAYLOAD') {
+              handleCredit(senderId,queryMsg);
+              //sendMessage(senderId, 'You have selected to add more credit to this account. Please provide a promocode for more credit.');
+            }
+             else {
+              handleAimsg(senderId,queryMsg);
+            }
           }
           
         }else{
