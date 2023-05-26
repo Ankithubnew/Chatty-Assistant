@@ -60,65 +60,65 @@ app.post("/webhook",async (req,res)=>{
       user=await User.findOne({userId:senderId})
       console.log(user);
     }
-    if(user){
-      if(user.credits>0){
-        await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
-        if(webhookEvent.postback && webhookEvent.postback.payload){
-          console.log("payload called")
-          let payload=webhookEvent.postback.payload;
-          console.log(payload);
-          if (payload === 'CHAT_PAYLOAD') {
-            const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-            console.log(upd);
-            sendMessage(senderId, 'You have selected to chat with AI Assistant. Please start typing your message.');
-          } else if (payload === 'GENERATE_IMAGES_PAYLOAD') {
-            const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-            console.log(upd);
-            sendMessage(senderId, 'You have selected to generate images with prompts. Please provide a prompt for image generation.');
-          } else if (payload === 'GENERATE_IDENTITY_PAYLOAD') {
-            const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-            console.log(upd);
-            sendMessage(senderId, 'You have selected to Number Search Program. Please provide a number for search.');
-          } else if (payload === 'GENERATE_CREDIT_PAYLOAD') {
-            const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-            console.log(upd);
-            sendMessage(senderId, `You have selected to add more credit to this account.You have ${user.credits} left. Please provide a promocode for more credit.`);
-          }
-           else {
-             const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-             console.log(upd);
-            sendMessage(senderId, payload);
-          }
-        }else{
-          const queryMsg=webhookEvent.message.text
-          user=await User.findOne({userId:senderId});
-          console.log(user.payload);
-          console.log("payload with msg called")
-          console.log(queryMsg);
-          if(queryMsg){
-            if (user.payload === 'CHAT_PAYLOAD') {
-              console.log("payload with msg called2")
-              handleAimsg(senderId,queryMsg);
-            } else if (user.payload === 'GENERATE_IMAGES_PAYLOAD') {
-              handleAimsg(senderId,queryMsg);
-            } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD') {
-              handleAimsg(senderId,queryMsg);
-            } else if (user.payload === 'GENERATE_CREDIT_PAYLOAD') {
-              handleCredit(senderId,queryMsg);
-              //sendMessage(senderId, 'You have selected to add more credit to this account. Please provide a promocode for more credit.');
-            }
-             else {
-              handleAimsg(senderId,queryMsg);
-            }
-          }
-        }
+    // if(user){
+    //   if(user.credits>0){
+    //     await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
+    //     if(webhookEvent.postback && webhookEvent.postback.payload){
+    //       console.log("payload called")
+    //       let payload=webhookEvent.postback.payload;
+    //       console.log(payload);
+    //       if (payload === 'CHAT_PAYLOAD') {
+    //         const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+    //         console.log(upd);
+    //         sendMessage(senderId, 'You have selected to chat with AI Assistant. Please start typing your message.');
+    //       } else if (payload === 'GENERATE_IMAGES_PAYLOAD') {
+    //         const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+    //         console.log(upd);
+    //         sendMessage(senderId, 'You have selected to generate images with prompts. Please provide a prompt for image generation.');
+    //       } else if (payload === 'GENERATE_IDENTITY_PAYLOAD') {
+    //         const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+    //         console.log(upd);
+    //         sendMessage(senderId, 'You have selected to Number Search Program. Please provide a number for search.');
+    //       } else if (payload === 'GENERATE_CREDIT_PAYLOAD') {
+    //         const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+    //         console.log(upd);
+    //         sendMessage(senderId, `You have selected to add more credit to this account.You have ${user.credits} left. Please provide a promocode for more credit.`);
+    //       }
+    //        else {
+    //          const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+    //          console.log(upd);
+    //         sendMessage(senderId, payload);
+    //       }
+    //     }else{
+    //       const queryMsg=webhookEvent.message.text
+    //       user=await User.findOne({userId:senderId});
+    //       console.log(user.payload);
+    //       console.log("payload with msg called")
+    //       console.log(queryMsg);
+    //       if(queryMsg){
+    //         if (user.payload === 'CHAT_PAYLOAD') {
+    //           console.log("payload with msg called2")
+    //           handleAimsg(senderId,queryMsg);
+    //         } else if (user.payload === 'GENERATE_IMAGES_PAYLOAD') {
+    //           handleAimsg(senderId,queryMsg);
+    //         } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD') {
+    //           handleAimsg(senderId,queryMsg);
+    //         } else if (user.payload === 'GENERATE_CREDIT_PAYLOAD') {
+    //           handleCredit(senderId,queryMsg);
+    //           //sendMessage(senderId, 'You have selected to add more credit to this account. Please provide a promocode for more credit.');
+    //         }
+    //          else {
+    //           handleAimsg(senderId,queryMsg);
+    //         }
+    //       }
+    //     }
         
-      }else{
-        sendMessage(senderId, 'Sorry, you have insufficient credits. Please Choose promo code section to restore your credits.')
-      }
-    }else{
-      sendMessage(senderId, 'User is Not here')
-    }
+    //   }else{
+    //     sendMessage(senderId, 'Sorry, you have insufficient credits. Please Choose promo code section to restore your credits.')
+    //   }
+    // }else{
+    //   sendMessage(senderId, 'User is Not here')
+    // }
     // body.entry.forEach(async (entry)=>{
     // })
 
