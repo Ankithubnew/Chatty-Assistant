@@ -149,7 +149,7 @@ async function handleCredit(sender,msg){
 async function handleAimsg(sender,msg){
   console.log("ai assitant with msg called")
   try {
-    const res=await ai.createChatCompletion(
+    let res=await ai.createChatCompletion(
       {
         model:'gpt-3.5-turbo',
         messages: [
@@ -159,6 +159,18 @@ async function handleAimsg(sender,msg){
         max_tokens:500
       }
     )
+    if(!res){
+      res=await ai.createChatCompletion(
+        {
+          model:'gpt-3.5-turbo',
+          messages: [
+              { "role": "system", "content": "You are a helpful assistant.Your name is Chatty Assitant created by Ankit Kumar." },
+              { "role": "user", "content": msg }
+          ],
+          max_tokens:500
+        }
+      )
+    }
     console.log(res.data);
     const resmsg=res.data.choices[0].message.content;
     console.log(resmsg);
@@ -171,11 +183,18 @@ async function handleAimsg(sender,msg){
 // handleAimsg(6506533576076061,"who are you");
 async function sendMessage(sender,msg){
   console.log("send messege called")
-  const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+  let reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
     recipient: { id: sender },
     message: { text: msg },
     access_token: process.env.FB_Token,
   });
+  if(!reqt){
+      reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+      recipient: { id: sender },
+      message: { text: msg },
+      access_token: process.env.FB_Token,
+    });
+  }
   console.log("msg sent")
   // console.log(reqt.data);
 }
