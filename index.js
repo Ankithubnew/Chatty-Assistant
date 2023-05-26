@@ -56,14 +56,14 @@ app.post("/webhook",async (req,res)=>{
     let user=await User.findOne({userId:senderId})
     if(!user){
       await User.create({userId:senderId,credits:5,payload:"CHAT_PAYLOAD"});
-      user=User.findOne({userId:senderId})
+      user=await User.findOne({userId:senderId})
       console.log(user);
     }
     if(user){
-
       if(user.credits>0){
         await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
         if(webhookEvent.postback && webhookEvent.postback.payload){
+          console.log("payload called")
           let payload=webhookEvent.postback.payload;
           console.log(payload);
           if (payload === 'CHAT_PAYLOAD') {
@@ -92,6 +92,7 @@ app.post("/webhook",async (req,res)=>{
 
           user=await User.findOne({senderId});
           console.log(user.payload);
+          console.log("payload with msg called")
           if(queryMsg){
             if (user.payload === 'CHAT_PAYLOAD') {
               handleAimsg(senderId,queryMsg);
@@ -112,6 +113,8 @@ app.post("/webhook",async (req,res)=>{
       }else{
         sendMessage(senderId, 'Sorry, you have insufficient credits. Please Choose promo code section to restore your credits.')
       }
+    }else{
+      sendMessage(senderId, 'User is Not here')
     }
     // body.entry.forEach(async (entry)=>{
     // })
@@ -124,6 +127,7 @@ app.post("/webhook",async (req,res)=>{
 
 async function handleCredit(sender,msg){
   // let user=await User.findOne({userId:sender});
+  console.log("credit called")
   let promoobj={
     ptweb09:5,
     ankit:2,
@@ -140,6 +144,7 @@ async function handleCredit(sender,msg){
 }
 
 async function handleAimsg(sender,msg){
+  console.log("ai assitant with msg called")
   try {
     const res=await ai.createChatCompletion(
       {
@@ -164,12 +169,13 @@ async function handleAimsg(sender,msg){
 }
 // handleAimsg(123,"who are you");
 async function sendMessage(sender,msg){
+  console.log("send messege called")
   const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
     recipient: { id: sender },
     message: { text: msg },
     access_token: process.env.FB_Token,
   });
-  console.log(reqt);
+  console.log(reqt.data);
 }
 
 app.get("/",(req,res)=>{
