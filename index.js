@@ -51,8 +51,8 @@ app.post("/webhook",async (req,res)=>{
     const webhookEvent=body.entry[0].messaging[0];
     console.log("webhook"+webhookEvent);
     const senderId=webhookEvent.sender.id;
-    const queryMsg=webhookEvent.message.text;
-    console.log("sender"+senderId,queryMsg);
+    //const queryMsg=webhookEvent.message.text;
+    // console.log("sender"+senderId,queryMsg);
 
     let user=await User.findOne({userId:senderId})
     if(!user){
@@ -90,10 +90,11 @@ app.post("/webhook",async (req,res)=>{
             sendMessage(senderId, payload);
           }
         }else{
-
+          const queryMsg=webhookEvent.message.text
           user=await User.findOne({userId:senderId});
           console.log(user.payload);
           console.log("payload with msg called")
+          console.log(queryMsg);
           if(queryMsg){
             if (user.payload === 'CHAT_PAYLOAD') {
               console.log("payload with msg called2")
