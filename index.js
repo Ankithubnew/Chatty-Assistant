@@ -144,6 +144,7 @@ async function handleCredit(sender,msg){
 
 async function handleAiImage(sender,prompt){
   // size: '512x512' size: '1024x1024
+  console.log("handle ai image called")
   try {
     let res=await ai.createImage(
       {
