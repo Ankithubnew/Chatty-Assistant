@@ -162,13 +162,13 @@ async function handleAimsg(sender,msg){
     console.log(res.data);
     const resmsg=res.data.choices[0].message.content;
     console.log(resmsg);
-    await sendMessage(sender,resmsg);
+    sendMessage(sender,resmsg);
 
   } catch (error) {
     console.log(error);
   }
 }
-// handleAimsg(123,"who are you");
+// handleAimsg(6506533576076061,"who are you");
 async function sendMessage(sender,msg){
   console.log("send messege called")
   const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
