@@ -17,7 +17,12 @@
   },
   "homepage": "https://github.com/Ankithubnew/Chatty-Assistant#readme",
   "dependencies": {
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.2.1",
+    "openai": "^3.2.1"
   }
 }
