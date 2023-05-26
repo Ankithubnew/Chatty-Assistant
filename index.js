@@ -90,11 +90,12 @@ app.post("/webhook",async (req,res)=>{
           }
         }else{
 
-          user=await User.findOne({senderId});
+          user=await User.findOne({userId:senderId});
           console.log(user.payload);
           console.log("payload with msg called")
           if(queryMsg){
             if (user.payload === 'CHAT_PAYLOAD') {
+              console.log("payload with msg called2")
               handleAimsg(senderId,queryMsg);
             } else if (user.payload === 'GENERATE_IMAGES_PAYLOAD') {
               handleAimsg(senderId,queryMsg);
@@ -175,6 +176,7 @@ async function sendMessage(sender,msg){
     message: { text: msg },
     access_token: process.env.FB_Token,
   });
+  console.log("send messege called with res")
   console.log(reqt.data);
 }
 
