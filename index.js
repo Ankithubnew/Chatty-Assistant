@@ -115,7 +115,7 @@ app.post("/webhook",async (req,res)=>{
         }
       }else{
         console.log("bug called")
-        sendMessage(senderId, 'Sorry, you have insufficient credits. Please Choose promo code section to restore your credits.')
+        // sendMessage(senderId, 'Sorry, you have insufficient credits. Please Choose promo code section to restore your credits.')
       }
     }else{
       sendMessage(senderId, 'User is Not here')
@@ -169,11 +169,11 @@ async function handleAimsg(sender,msg){
 // handleAimsg(123,"who are you");
 async function sendMessage(sender,msg){
   console.log("send messege called")
-  const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
-    recipient: { id: sender },
-    message: { text: msg },
-    access_token: process.env.FB_Token,
-  });
+  // const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+  //   recipient: { id: sender },
+  //   message: { text: msg },
+  //   access_token: process.env.FB_Token,
+  // });
   console.log("msg sent")
   // console.log(reqt.data);
 }
