@@ -123,6 +123,7 @@ app.post("/webhook",async (req,res)=>{
     // })
 
     res.status(200).send('EVENT_RECEIVED')
+    
   }else{
     res.sendStatus(404)
   }
@@ -131,38 +132,38 @@ app.post("/webhook",async (req,res)=>{
 async function handleCredit(sender,msg){
   // let user=await User.findOne({userId:sender});
   console.log("credit called")
-  let promoobj={
-    ptweb09:5,
-    ankit:2,
-    chatty:1
-  }
-  let promo=msg.toLowerCase();
-  if(promo in promoobj){
-    let credit=promoobj[promo]
-    await User.findOneAndUpdate({userId:sender},{$inc:{credits:credit}})
-    sendMessage(sender,`Promo code ${promo} redeemed successfully! ${credit} credits have been added to your account.`)
-  }else{
-    sendMessage(sender,'Invalid Promo Code')
-  }
+  // let promoobj={
+  //   ptweb09:5,
+  //   ankit:2,
+  //   chatty:1
+  // }
+  // let promo=msg.toLowerCase();
+  // if(promo in promoobj){
+  //   let credit=promoobj[promo]
+  //   await User.findOneAndUpdate({userId:sender},{$inc:{credits:credit}})
+  //   sendMessage(sender,`Promo code ${promo} redeemed successfully! ${credit} credits have been added to your account.`)
+  // }else{
+  //   sendMessage(sender,'Invalid Promo Code')
+  // }
 }
 
 async function handleAimsg(sender,msg){
   console.log("ai assitant with msg called")
   try {
-    const res=await ai.createChatCompletion(
-      {
-        model:'gpt-3.5-turbo',
-        messages: [
-            { "role": "system", "content": "You are a helpful assistant.Your name is Chatty Assitant created by Ankit Kumar." },
-            { "role": "user", "content": msg }
-        ],
-        max_tokens:500
-      }
-    )
-    console.log(res.data);
-    const resmsg=res.data.choices[0].message.content;
-    console.log(resmsg);
-    sendMessage(sender,resmsg);
+    // const res=await ai.createChatCompletion(
+    //   {
+    //     model:'gpt-3.5-turbo',
+    //     messages: [
+    //         { "role": "system", "content": "You are a helpful assistant.Your name is Chatty Assitant created by Ankit Kumar." },
+    //         { "role": "user", "content": msg }
+    //     ],
+    //     max_tokens:500
+    //   }
+    // )
+    // console.log(res.data);
+    // const resmsg=res.data.choices[0].message.content;
+    // console.log(resmsg);
+    // sendMessage(sender,resmsg);
 
 
 
@@ -173,13 +174,13 @@ async function handleAimsg(sender,msg){
 // handleAimsg(123,"who are you");
 async function sendMessage(sender,msg){
   console.log("send messege called")
-  const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
-    recipient: { id: sender },
-    message: { text: msg },
-    access_token: process.env.FB_Token,
-  });
-  console.log("send messege called with res")
-  console.log(reqt.data);
+  // const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+  //   recipient: { id: sender },
+  //   message: { text: msg },
+  //   access_token: process.env.FB_Token,
+  // });
+  // console.log("send messege called with res")
+  // console.log(reqt.data);
 }
 
 app.get("/",(req,res)=>{
