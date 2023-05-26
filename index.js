@@ -17,7 +17,7 @@ const ai=new OpenAIApi(config);
 
 const UserSchema=new mongoose.Schema({
   userId: { type: String, required: true, unique:true },
-  credits: { type: Number, default: 0 },
+  credits: { type: Number, default: 5 },
   timestamp: {
     type: Date,
     default: Date.now,
@@ -54,118 +54,113 @@ app.post("/webhook",async (req,res)=>{
     //const queryMsg=webhookEvent.message.text;
     console.log("sender"+senderId);
 
-    // let user=await User.findOne({userId:senderId})
-    // if(!user){
-    //   await User.create({userId:senderId,credits:5,payload:"CHAT_PAYLOAD"});
-    //   user=await User.findOne({userId:senderId})
-    //   console.log(user);
-    // }
-    // if(user){
-    //   if(user.credits>0){
-    //     await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
-    //     if(webhookEvent.postback && webhookEvent.postback.payload){
-    //       console.log("payload called")
-    //       let payload=webhookEvent.postback.payload;
-    //       console.log(payload);
-    //       if (payload === 'CHAT_PAYLOAD') {
-    //         const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-    //         console.log(upd);
-    //         sendMessage(senderId, 'You have selected to chat with AI Assistant. Please start typing your message.');
-    //       } else if (payload === 'GENERATE_IMAGES_PAYLOAD') {
-    //         const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-    //         console.log(upd);
-    //         sendMessage(senderId, 'You have selected to generate images with prompts. Please provide a prompt for image generation.');
-    //       } else if (payload === 'GENERATE_IDENTITY_PAYLOAD') {
-    //         const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-    //         console.log(upd);
-    //         sendMessage(senderId, 'You have selected to Number Search Program. Please provide a number for search.');
-    //       } else if (payload === 'GENERATE_CREDIT_PAYLOAD') {
-    //         const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-    //         console.log(upd);
-    //         sendMessage(senderId, `You have selected to add more credit to this account.You have ${user.credits} left. Please provide a promocode for more credit.`);
-    //       }
-    //        else {
-    //          const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
-    //          console.log(upd);
-    //         sendMessage(senderId, payload);
-    //       }
-    //     }else{
-    //       const queryMsg=webhookEvent.message.text
-    //       user=await User.findOne({userId:senderId});
-    //       console.log(user.payload);
-    //       console.log("payload with msg called")
-    //       console.log(queryMsg);
-    //       if(queryMsg){
-    //         if (user.payload === 'CHAT_PAYLOAD') {
-    //           console.log("payload with msg called2")
-    //           handleAimsg(senderId,queryMsg);
-    //         } else if (user.payload === 'GENERATE_IMAGES_PAYLOAD') {
-    //           handleAimsg(senderId,queryMsg);
-    //         } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD') {
-    //           handleAimsg(senderId,queryMsg);
-    //         } else if (user.payload === 'GENERATE_CREDIT_PAYLOAD') {
-    //           handleCredit(senderId,queryMsg);
-    //           //sendMessage(senderId, 'You have selected to add more credit to this account. Please provide a promocode for more credit.');
-    //         }
-    //          else {
-    //           handleAimsg(senderId,queryMsg);
-    //         }
-    //       }
-    //     }
-        
-    //   }else{
-    //     sendMessage(senderId, 'Sorry, you have insufficient credits. Please Choose promo code section to restore your credits.')
-    //   }
-    // }else{
-    //   sendMessage(senderId, 'User is Not here')
-    // }
-    // body.entry.forEach(async (entry)=>{
-    // })
+    let user=await User.findOne({userId:senderId})
+    if(!user){
+      await User.create({userId:senderId,credits:5,payload:"CHAT_PAYLOAD"});
+      user=await User.findOne({userId:senderId})
+      console.log("user"+user);
+    }
+    if(user){
+      console.log(user);
+      if(user.credits>0){
+        await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
+        if(webhookEvent.postback && webhookEvent.postback.payload){
+          console.log("payload called")
+          let payload=webhookEvent.postback.payload;
+          console.log(payload);
+          if (payload === 'CHAT_PAYLOAD') {
+            const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+            console.log(upd);
+            sendMessage(senderId, 'You have selected to chat with AI Assistant. Please start typing your message.');
+          } else if (payload === 'GENERATE_IMAGES_PAYLOAD') {
+            const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+            console.log(upd);
+            sendMessage(senderId, 'You have selected to generate images with prompts. Please provide a prompt for image generation.');
+          } else if (payload === 'GENERATE_IDENTITY_PAYLOAD') {
+            const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+            console.log(upd);
+            sendMessage(senderId, 'You have selected to Number Search Program. Please provide a number for search.');
+          } else if (payload === 'GENERATE_CREDIT_PAYLOAD') {
+            const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+            console.log(upd);
+            sendMessage(senderId, `You have selected to add more credit to this account.You have ${user.credits} left. Please provide a promocode for more credit.`);
+          }
+           else {
+             const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+             console.log(upd);
+            sendMessage(senderId, payload);
+          }
+        }else{
+          const queryMsg=webhookEvent.message.text
+          user=await User.findOne({userId:senderId});
+          console.log(user.payload);
+          console.log("payload with msg called")
+          console.log(queryMsg);
+          if(queryMsg){
+            if (user.payload === 'CHAT_PAYLOAD') {
+              console.log("payload with msg called2")
+              handleAimsg(senderId,queryMsg);
+            } else if (user.payload === 'GENERATE_IMAGES_PAYLOAD') {
+              handleAimsg(senderId,queryMsg);
+            } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD') {
+              handleAimsg(senderId,queryMsg);
+            } else if (user.payload === 'GENERATE_CREDIT_PAYLOAD') {
+              handleCredit(senderId,queryMsg);
+              //sendMessage(senderId, 'You have selected to add more credit to this account. Please provide a promocode for more credit.');
+            }
+             else {
+              handleAimsg(senderId,queryMsg);
+            }
+          }
+        }
+      }else{
+        console.log("bug called")
+        sendMessage(senderId, 'Sorry, you have insufficient credits. Please Choose promo code section to restore your credits.')
+      }
+    }else{
+      sendMessage(senderId, 'User is Not here')
+    }
 
-    res.status(200).send('EVENT_RECEIVED')
     
-  }else{
-    res.sendStatus(404)
   }
+  res.status(200).send('EVENT_RECEIVED')
 })
 
 async function handleCredit(sender,msg){
   // let user=await User.findOne({userId:sender});
   console.log("credit called")
-  // let promoobj={
-  //   ptweb09:5,
-  //   ankit:2,
-  //   chatty:1
-  // }
-  // let promo=msg.toLowerCase();
-  // if(promo in promoobj){
-  //   let credit=promoobj[promo]
-  //   await User.findOneAndUpdate({userId:sender},{$inc:{credits:credit}})
-  //   sendMessage(sender,`Promo code ${promo} redeemed successfully! ${credit} credits have been added to your account.`)
-  // }else{
-  //   sendMessage(sender,'Invalid Promo Code')
-  // }
+  let promoobj={
+    ptweb09:5,
+    ankit:2,
+    chatty:1
+  }
+  let promo=msg.toLowerCase();
+  if(promo in promoobj){
+    let credit=promoobj[promo]
+    await User.findOneAndUpdate({userId:sender},{$inc:{credits:credit}})
+    sendMessage(sender,`Promo code ${promo} redeemed successfully! ${credit} credits have been added to your account.`)
+  }else{
+    sendMessage(sender,'Invalid Promo Code')
+  }
 }
 
 async function handleAimsg(sender,msg){
   console.log("ai assitant with msg called")
   try {
-    // const res=await ai.createChatCompletion(
-    //   {
-    //     model:'gpt-3.5-turbo',
-    //     messages: [
-    //         { "role": "system", "content": "You are a helpful assistant.Your name is Chatty Assitant created by Ankit Kumar." },
-    //         { "role": "user", "content": msg }
-    //     ],
-    //     max_tokens:500
-    //   }
-    // )
-    // console.log(res.data);
-    // const resmsg=res.data.choices[0].message.content;
-    // console.log(resmsg);
-    // sendMessage(sender,resmsg);
-
-
+    const res=await ai.createChatCompletion(
+      {
+        model:'gpt-3.5-turbo',
+        messages: [
+            { "role": "system", "content": "You are a helpful assistant.Your name is Chatty Assitant created by Ankit Kumar." },
+            { "role": "user", "content": msg }
+        ],
+        max_tokens:500
+      }
+    )
+    console.log(res.data);
+    const resmsg=res.data.choices[0].message.content;
+    console.log(resmsg);
+    await sendMessage(sender,resmsg);
 
   } catch (error) {
     console.log(error);
@@ -174,12 +169,12 @@ async function handleAimsg(sender,msg){
 // handleAimsg(123,"who are you");
 async function sendMessage(sender,msg){
   console.log("send messege called")
-  // const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
-  //   recipient: { id: sender },
-  //   message: { text: msg },
-  //   access_token: process.env.FB_Token,
-  // });
-  // console.log("send messege called with res")
+  const reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+    recipient: { id: sender },
+    message: { text: msg },
+    access_token: process.env.FB_Token,
+  });
+  console.log("msg sent")
   // console.log(reqt.data);
 }
 
