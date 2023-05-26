@@ -49,9 +49,10 @@ app.post("/webhook",async (req,res)=>{
   console.log(body);
   if(body.object==="page"){
     const webhookEvent=body.entry[0].messaging[0];
-    console.log(webhookEvent);
+    console.log("webhook"+webhookEvent);
     const senderId=webhookEvent.sender.id;
     const queryMsg=webhookEvent.message.text;
+    console.log("sender"+senderId,queryMsg);
 
     let user=await User.findOne({userId:senderId})
     if(!user){
