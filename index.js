@@ -3,7 +3,7 @@ const cors = require("cors");
 const axios= require("axios");
 const openAi=require("openai")
 const mongoose= require("mongoose")
-const transcript= require("youtube-transcript-axios")
+const transcript= require("youtube-transcript")
 require("dotenv").config();
 
 const app = express();
