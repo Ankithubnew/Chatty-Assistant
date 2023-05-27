@@ -77,6 +77,11 @@ app.post("/webhook",async (req,res)=>{
           const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
           console.log(upd);
           sendMessage(senderId, 'You have selected to generate images with prompts. Please provide a prompt for image generation.');
+        } else if (payload === 'GENERATE_SUMMARY_PAYLOAD') {
+          const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+          console.log(upd);
+          //sendMessage(senderId, 'You have selected to Number Search Program. Please provide a number for search.');
+          sendMessage(senderId, 'You have selected to YouTube video summerizer Program. Please provide a valid youtube video link for summerize.');
         } else if (payload === 'GENERATE_IDENTITY_PAYLOAD') {
           const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
           console.log(upd);
@@ -106,6 +111,9 @@ app.post("/webhook",async (req,res)=>{
           } else if (user.payload === 'GENERATE_IMAGES_PAYLOAD' && user.credits>0) {
             await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
             handleAiImage(senderId,queryMsg);
+          } else if (user.payload === 'GENERATE_SUMMARY_PAYLOAD' && user.credits>0) {
+            await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
+            getTranscript(senderId,queryMsg);
           } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD' && user.credits>0) {
             await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
             getTranscript(senderId,queryMsg);
