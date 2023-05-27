@@ -271,6 +271,7 @@ async function getTranscript(sender,link){
     // console.log(res);
     if(!res){
       console.log("need new transcipt fetcher")
+      res=await YoutubeTranscript.fetchTranscript(link);
     }
     let ts=res.map(line => line.text).join(' ')
     // console.log(ts);
