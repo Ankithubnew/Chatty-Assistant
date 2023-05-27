@@ -257,10 +257,12 @@ async function sendImage(sender,url){
 
 async function getTranscript(sender,link){
   try {
+    console.log("transcript start")
     let res=await YoutubeTranscript.fetchTranscript(link);
     // console.log(res);
     let ts=res.map(line => line.text).join(' ')
     // console.log(ts);
+    console.log("transcript done")
     SummerizeIt(sender,ts);
   } catch (error) {
     console.log(error)
@@ -269,6 +271,7 @@ async function getTranscript(sender,link){
 
 async function SummerizeIt(sender,msg){
   try {
+    console.log("summerize start")
     let res=await ai.createChatCompletion(
       {
         model:'gpt-3.5-turbo',
@@ -288,7 +291,7 @@ async function SummerizeIt(sender,msg){
 
 }
 
-// getTranscript(6506533576076061,"https://youtu.be/UQnucbThyFw");
+// getTranscript(6506533576076061,"https://youtu.be/lRQ5z7i7pxE");
 
 app.get("/",(req,res)=>{
     res.send("welcome");
