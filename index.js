@@ -308,7 +308,11 @@ async function getTranscript2(sender,link){
     const check=link.match(valid)
     // console.log(check);
     if(check && check[1]){
-      let res=await axios.get(`https://youtube-browser-api.netlify.app/transcript?videoId=${check[1]}`)
+      let time=5000;
+      let res=await axios.get(`https://youtube-browser-api.netlify.app/transcript?videoId=${check[1]}`,{time});
+      if(!res.data.videoId){
+        res=await axios.get(`https://youtube-browser-api.netlify.app/transcript?videoId=${check[1]}`)
+      }
       // console.log(res.data)
       const res2=res.data.videoId
       let ts=res2.map(line => line.text).join(' ')
