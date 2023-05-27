@@ -202,11 +202,12 @@ async function handleAimsg(sender,msg){
 async function sendMessage(sender,msg){
   console.log("send messege called")
   console.log("sendmsg"+msg)
-  let reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
-    recipient: { id: sender },
-    message: { text: msg },
-    access_token: process.env.FB_Token,
-  });
+  // let reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+  //   recipient: { id: sender },
+  //   message: { text: msg },
+  //   access_token: process.env.FB_Token,
+  // });
+
   // if(!reqt.data){
   //     reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
   //     recipient: { id: sender },
@@ -216,6 +217,28 @@ async function sendMessage(sender,msg){
   // }
   console.log("msg sent")
   // console.log(reqt.data);
+  try {
+    let reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+        recipient: { id: sender },
+        message: { text: msg },
+        access_token: process.env.FB_Token,
+      });
+    console.log("msg sent from 1")
+    if(!reqt.data){
+      reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+        recipient: { id: sender },
+        message: { text: msg },
+        access_token: process.env.FB_Token,
+      });
+      console.log("msg sent from 2")
+    }
+    console.log("finally msg sent")
+
+  } catch (error) {
+    console.log("Error:")
+    console.log(error)
+  }
+
 }
 
 
