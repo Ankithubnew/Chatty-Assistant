@@ -23,6 +23,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^7.2.1",
-    "openai": "^3.2.1"
+    "openai": "^3.2.1",
+    "youtube-transcript-axios": "^1.0.7"
   }
 }

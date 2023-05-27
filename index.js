@@ -3,10 +3,12 @@ const cors = require("cors");
 const axios= require("axios");
 const openAi=require("openai")
 const mongoose= require("mongoose")
+const transcript= require("youtube-transcript-axios")
 require("dotenv").config();
 
 const app = express();
 const PORT = 3002;
+const {YoutubeTranscript} = transcript;
 const {Configuration,OpenAIApi}=openAi;
 app.use(cors());
 
@@ -77,7 +79,8 @@ app.post("/webhook",async (req,res)=>{
         } else if (payload === 'GENERATE_IDENTITY_PAYLOAD') {
           const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
           console.log(upd);
-          sendMessage(senderId, 'You have selected to Number Search Program. Please provide a number for search.');
+          //sendMessage(senderId, 'You have selected to Number Search Program. Please provide a number for search.');
+          sendMessage(senderId, 'You have selected to YouTube video summerizer Program. Please provide a valid youtube video link for summerize.');
         } else if (payload === 'GENERATE_CREDIT_PAYLOAD') {
           const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
           console.log(upd);
@@ -104,7 +107,7 @@ app.post("/webhook",async (req,res)=>{
             handleAiImage(senderId,queryMsg);
           } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD' && user.credits>0) {
             await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
-            handleAimsg(senderId,queryMsg);
+            getTranscript(senderId,queryMsg);
           } else if (user.payload === 'GENERATE_CREDIT_PAYLOAD') {
             handleCredit(senderId,queryMsg);
             //sendMessage(senderId, 'You have selected to add more credit to this account. Please provide a promocode for more credit.');
@@ -126,7 +129,7 @@ app.post("/webhook",async (req,res)=>{
 
 async function handleCredit(sender,msg){
   // let user=await User.findOne({userId:sender});
-  console.log("credit called")
+  // console.log("credit called")
   let promoobj={
     ptweb09:5,
     ankit:2,
@@ -251,6 +254,41 @@ async function sendImage(sender,url){
   console.log(reqt.data);
 }
 // sendImage(6506533576076061,"http://www.wheelermagnet.com/images/png/20th%20anniv.png")
+
+async function getTranscript(sender,link){
+  try {
+    let res=await YoutubeTranscript.fetchTranscript(link);
+    // console.log(res);
+    let ts=res.map(line => line.text).join(' ')
+    // console.log(ts);
+    SummerizeIt(sender,ts);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function SummerizeIt(sender,msg){
+  try {
+    let res=await ai.createChatCompletion(
+      {
+        model:'gpt-3.5-turbo',
+        messages: [
+            { "role": "system", "content": "Summerize this youtube video with title" },
+            { "role": "user", "content": msg }
+        ],
+        max_tokens:500
+      }
+    )
+    console.log("summerize done")
+    const resmsg=res.data.choices[0].message.content;
+    sendMessage(sender,resmsg)
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
+// getTranscript(6506533576076061,"https://youtu.be/UQnucbThyFw");
 
 app.get("/",(req,res)=>{
     res.send("welcome");
