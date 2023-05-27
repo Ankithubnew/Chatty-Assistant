@@ -4,6 +4,7 @@ const axios= require("axios");
 const openAi=require("openai")
 const mongoose= require("mongoose")
 const transcript= require("youtube-transcript")
+const { google } = require('googleapis');
 require("dotenv").config();
 
 const app = express();
@@ -107,7 +108,7 @@ app.post("/webhook",async (req,res)=>{
             handleAiImage(senderId,queryMsg);
           } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD' && user.credits>0) {
             await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
-            getTranscript2(senderId,queryMsg);
+            getTranscript(senderId,queryMsg);
           } else if (user.payload === 'GENERATE_CREDIT_PAYLOAD') {
             handleCredit(senderId,queryMsg);
             //sendMessage(senderId, 'You have selected to add more credit to this account. Please provide a promocode for more credit.');
@@ -310,21 +311,43 @@ async function getTranscript2(sender,link){
     if(check && check[1]){
       let vid=check[1];
       let time=5000;
-      let res=await axios.get(`https://youtube-browser-api.netlify.app/transcript?videoId=${vid}`);
-      if(!res.data.videoId){
-        console.log("checking with fetch")
-        let res3=await fetch(`https://youtube-browser-api.netlify.app/transcript?videoId=${vid}`)
-        if(!res3.ok){
-          console.log("fetch failed")
-        }
-        res=await res2.json();
+      const youtube = google.youtube({ version: 'v3', auth: process.env.YouTube_Key });
+      const captions = await youtube.captions.list({
+        part: 'snippet',
+        videoId: vid,
+      });
+  
+      if (captions.data.items.length === 0) {
+        throw new Error('Transcript not found for the video');
       }
-      // console.log(res.data)
-      const res2=res.data.videoId
-      let ts=res2.map(line => line.text).join(' ')
-      // console.log(ts2)
-      console.log("transcript done")
-      SummerizeIt(sender,ts);
+  
+      const captionId = captions.data.items[0].id;
+  
+      const transcript = await youtube.captions.download({
+        id: captionId,
+        tfmt: 'ttml', // Choose the desired format for the transcript (e.g., 'ttml', 'srt', 'vtt')
+      });
+      console.log(transcript);
+      // Handle the transcript data
+      console.log(transcript.data);
+
+      // let res=await axios.get(`https://youtube-browser-api.netlify.app/transcript?videoId=${vid}`);
+      // if(!res.data.videoId){
+      //   console.log("checking with fetch")
+      //   let res3=await fetch(`https://youtube-browser-api.netlify.app/transcript?videoId=${vid}`)
+      //   if(!res3.ok){
+      //     console.log("fetch failed")
+      //   }
+      //   res=await res2.json();
+      // }
+      // // console.log(res.data)
+      // const res2=res.data.videoId
+      // let ts=res2.map(line => line.text).join(' ')
+      // // console.log(ts2)
+      // console.log("transcript done")
+      // SummerizeIt(sender,ts);
+
+
       // let res=await axios.get(`https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=${check[1]}&key=${process.env.YouTube_Key}`)
       // // console.log(res.data);
       // console.log(res.data.items[0].id)
