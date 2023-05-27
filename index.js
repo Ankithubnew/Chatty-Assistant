@@ -135,7 +135,9 @@ async function handleCredit(sender,msg){
   let promo=msg.toLowerCase();
   if(promo in promoobj){
     let credit=promoobj[promo]
+    console.log("promo match")
     await User.findOneAndUpdate({userId:sender},{$inc:{credits:credit}})
+    console.log("promo updated")
     sendMessage(sender,`Promo code ${promo} redeemed successfully! ${credit} credits have been added to your account.`)
   }else{
     sendMessage(sender,'Invalid Promo Code')
@@ -177,6 +179,7 @@ async function handleAimsg(sender,msg){
       }
     )
     if(!res.data.choices[0]){
+      console.log("msg genrate from ai2")
       res=await ai.createChatCompletion(
         {
           model:'gpt-3.5-turbo',
@@ -188,6 +191,7 @@ async function handleAimsg(sender,msg){
         }
       )
     }
+    console.log("ai genrate the msg")
     console.log(res.data);
     const resmsg=res.data.choices[0].message.content;
     console.log(resmsg);
@@ -202,21 +206,7 @@ async function handleAimsg(sender,msg){
 async function sendMessage(sender,msg){
   console.log("send messege called")
   console.log("sendmsg"+msg)
-  // let reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
-  //   recipient: { id: sender },
-  //   message: { text: msg },
-  //   access_token: process.env.FB_Token,
-  // });
-
-  // if(!reqt.data){
-  //     reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
-  //     recipient: { id: sender },
-  //     message: { text: msg },
-  //     access_token: process.env.FB_Token,
-  //   });
-  // }
   console.log("msg sent")
-  // console.log(reqt.data);
   try {
     let reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
         recipient: { id: sender },
