@@ -159,6 +159,10 @@ async function handleAiImage(sender,prompt){
       }
     )
     console.log(res.data.data[0].url);
+    // const tokens = Math.ceil(res.data.usage.total_tokens / 1000);
+    // console.log(`Tokens: ${tokens}K`);
+    // const cost = tokens * 0.002;
+    // console.log(`Cost: $${cost}`);
     sendImage(sender,res.data.data[0].url);
   } catch (error) {
     console.log(error)
@@ -198,6 +202,7 @@ async function handleAimsg(sender,msg){
     console.log(res.data);
     const resmsg=res.data.choices[0].message.content;
     console.log(resmsg);
+    console.log(res.data.usage.total_tokens)
     // await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
     sendMessage(sender,resmsg);
 
@@ -205,7 +210,9 @@ async function handleAimsg(sender,msg){
     console.log(error);
   }
 }
+
 // handleAimsg(6506533576076061,"who are you");
+
 async function sendMessage(sender,msg){
   console.log("send messege called")
   console.log("sendmsg"+msg)
@@ -250,6 +257,7 @@ async function sendImage(sender,url){
       access_token: process.env.FB_Token,
     });
   }
+  
   console.log("img  sent")
   console.log(reqt.data);
 }
@@ -284,6 +292,7 @@ async function SummerizeIt(sender,msg){
     )
     console.log("summerize done")
     const resmsg=res.data.choices[0].message.content;
+    console.log(res.data.usage.total_tokens)
     sendMessage(sender,resmsg)
   } catch (error) {
     console.log(error)
@@ -297,7 +306,7 @@ async function getTranscript2(sender,link){
   try {
     const valid=/(?:youtube\.com\/(?:[^\/]+\/[^\/]+\/|(?:v|e(?:mbed)?)\/|[^\/]+\?v=)|youtu\.be\/)([^"&?\/ ]{11})/;
     const check=link.match(valid)
-    console.log(check);
+    // console.log(check);
     if(check && check[1]){
       let res=await axios.get(`https://youtube-browser-api.netlify.app/transcript?videoId=${check[1]}`)
       // console.log(res.data)
