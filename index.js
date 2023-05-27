@@ -107,7 +107,7 @@ app.post("/webhook",async (req,res)=>{
             handleAiImage(senderId,queryMsg);
           } else if (user.payload === 'GENERATE_IDENTITY_PAYLOAD' && user.credits>0) {
             await User.updateOne({ userId: senderId }, { $inc: { credits: -1 } });
-            getTranscript(senderId,queryMsg);
+            getTranscript2(senderId,queryMsg);
           } else if (user.payload === 'GENERATE_CREDIT_PAYLOAD') {
             handleCredit(senderId,queryMsg);
             //sendMessage(senderId, 'You have selected to add more credit to this account. Please provide a promocode for more credit.');
@@ -209,7 +209,7 @@ async function handleAimsg(sender,msg){
 async function sendMessage(sender,msg){
   console.log("send messege called")
   console.log("sendmsg"+msg)
-  console.log("msg sent")
+  // console.log("msg sent")
   try {
     let reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
         recipient: { id: sender },
@@ -292,6 +292,40 @@ async function SummerizeIt(sender,msg){
 }
 
 // getTranscript(6506533576076061,"https://youtu.be/lRQ5z7i7pxE");
+async function getTranscript2(sender,link){
+  console.log("transscipt start with 2")
+  try {
+    const valid=/(?:youtube\.com\/(?:[^\/]+\/[^\/]+\/|(?:v|e(?:mbed)?)\/|[^\/]+\?v=)|youtu\.be\/)([^"&?\/ ]{11})/;
+    const check=link.match(valid)
+    console.log(check);
+    if(check && check[1]){
+      let res=await axios.get(`https://youtube-browser-api.netlify.app/transcript?videoId=${check[1]}`)
+      // console.log(res.data)
+      const res2=res.data.videoId
+      let ts=res2.map(line => line.text).join(' ')
+      // console.log(ts2)
+      console.log("transcript done")
+      SummerizeIt(sender,ts);
+      // let res=await axios.get(`https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=${check[1]}&key=${process.env.YouTube_Key}`)
+      // // console.log(res.data);
+      // console.log(res.data.items[0].id)
+      // let cid=res.data.items[0].id;
+      // let res2=await axios.get(`https://www.googleapis.com/youtube/v3/captions/${cid}?key=${process.env.YouTube_Key}`)
+      // console.log(res2.data.snippet)
+      // console.log(res.data.items[0].snippet.transcriptUrl)
+      // console.log(ts);
+
+    }else{
+      sendMessage(sender,"Please Provide Valid Youtube Video Link.")
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// getTranscript2(6506533576076061,"https://youtu.be/lRQ5z7i7pxE");
+
+
 
 app.get("/",(req,res)=>{
     res.send("welcome");
