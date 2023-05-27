@@ -207,13 +207,13 @@ async function sendMessage(sender,msg){
     message: { text: msg },
     access_token: process.env.FB_Token,
   });
-  if(!reqt.data){
-      reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
-      recipient: { id: sender },
-      message: { text: msg },
-      access_token: process.env.FB_Token,
-    });
-  }
+  // if(!reqt.data){
+  //     reqt=await axios.post('https://graph.facebook.com/v13.0/me/messages', {
+  //     recipient: { id: sender },
+  //     message: { text: msg },
+  //     access_token: process.env.FB_Token,
+  //   });
+  // }
   console.log("msg sent")
   // console.log(reqt.data);
 }
