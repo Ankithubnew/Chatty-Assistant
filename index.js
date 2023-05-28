@@ -4,9 +4,6 @@ const axios= require("axios");
 const openAi=require("openai")
 const mongoose= require("mongoose")
 const transcript= require("youtube-transcript")
-// const truecallerjs= require("truecallerjs")
-// const truecallerjs = require('truecallerjs');
-const { google } = require('googleapis');
 require("dotenv").config();
 
 const app = express();
