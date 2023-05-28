@@ -4,6 +4,8 @@ const axios= require("axios");
 const openAi=require("openai")
 const mongoose= require("mongoose")
 const transcript= require("youtube-transcript")
+// const truecallerjs= require("truecallerjs")
+// const truecallerjs = require('truecallerjs');
 const { google } = require('googleapis');
 require("dotenv").config();
 
@@ -379,7 +381,19 @@ async function getTranscript2(sender,link){
 
 // getTranscript2(6506533576076061,"https://youtu.be/lRQ5z7i7pxE");
 
+// async function Truecaller(sender,num){
+//     searchData = {
+//         num,
+//         countryCode:'IN',
+//         installationId:"a1i0U--d-az9g-YVTSdir5crZQgFNBy0Pv38aWxi2OpkAb08UIEj_OwNu6eAyOMx",
+//         output: "JSON",
+//       }
+//       const searchResult = await truecallerjs.searchNumber(searchData);
+//         console.log(searchResult);
+//         // res.send(JSON.parse(searchResult))
+// }
 
+// Truecaller(1,"+918434086482")
 
 app.get("/",(req,res)=>{
     res.send("welcome");
