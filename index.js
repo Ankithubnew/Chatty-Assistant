@@ -79,13 +79,13 @@ app.post("/webhook",async (req,res)=>{
         } else if (payload === 'GENERATE_SUMMARY_PAYLOAD') {
           const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
           console.log(upd);
-          sendMessage(senderId, 'You have selected to Number Search Program. Please provide a Valid Indian 10 digit number for search .');
-          // sendMessage(senderId, 'You have selected to YouTube video summerizer Program. Please provide a valid youtube video link for summerize.');
+          sendMessage(senderId, 'You have selected to YouTube video summerizer Program. Please provide a valid youtube video link for summerize.');
         } else if (payload === 'GENERATE_IDENTITY_PAYLOAD') {
           const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
+          sendMessage(senderId, 'You have selected to Number Search Program. Please provide a Valid Indian 10 digit number for search .');
           console.log(upd);
           //sendMessage(senderId, 'You have selected to Number Search Program. Please provide a number for search.');
-          sendMessage(senderId, 'You have selected to YouTube video summerizer Program. Please provide a valid youtube video link for summerize.');
+          // sendMessage(senderId, 'You have selected to YouTube video summerizer Program. Please provide a valid youtube video link for summerize.');
         } else if (payload === 'GENERATE_CREDIT_PAYLOAD') {
           const upd=await User.findOneAndUpdate({userId:senderId},{payload:payload},{new:true})
           console.log(upd);
