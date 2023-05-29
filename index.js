@@ -379,41 +379,48 @@ async function getTranscript2(sender,link){
 // getTranscript2(6506533576076061,"https://youtu.be/lRQ5z7i7pxE");
 
 async function Truecaller(sender,num){
-  const url="https://search5-noneu.truecaller.com/v2/search"
-  const params={
-    q:num,
-    countryCode:'IN',
-    type:4,
-    locAddr:'',
-    placement:'EARCHRESULTS,HISTORY,DETAILS',
-    adId:'',
-    encoding:'json'
+  const numregex=/^\d{10}$/;
+  if(numregex.test(num)){
+    const url="https://search5-noneu.truecaller.com/v2/search"
+    const params={
+      q:num,
+      countryCode:'IN',
+      type:4,
+      locAddr:'',
+      placement:'EARCHRESULTS,HISTORY,DETAILS',
+      adId:'',
+      encoding:'json'
+    }
+    const headers={
+      'Authorization':`Bearer ${process.env.TrueCaller_Key}`,
+      'User-Agent':'Truecaller/10.38.7 (Android;6.0.1)'
+    }
+    const res=await axios.get(url,{params,headers});
+    // console.log(res.data)
+    const name=res.data.data[0]?.name||'Not Available';
+    const access=res.data.data[0]?.access||'Not Available';
+    const image=res.data.data[0]?.image||'Not Available';
+    const carrier=res.data.data[0].phones[0]?.carrier||'Not Available';
+    const city=res.data.data[0].addresses[0]?.city||'Not Available';
+    const email=res.data.data[0].internetAddresses[0]?.id||'Not Available';
+    // console.log(name,email,city,carrier,image,access);
+    const msg=`Mobile Number : ${num} Info\n`+
+    `Name : ${name}\n`+
+    `Email : ${email}\n`+
+    `City : ${city}\n`+
+    `Carrier : ${carrier}\n`+
+    `Image: ${image}`
+    // console.log(msg);
+    sendMessage(sender,msg)
+
+  }else{
+    sendMessage(sender,'Please send exactly 10 digit number for Information.')
   }
-  const headers={
-    'Authorization':`Bearer ${process.env.TrueCaller_Key}`,
-    'User-Agent':'Truecaller/10.38.7 (Android;6.0.1)'
-  }
-  const res=await axios.get(url,{params,headers});
-  console.log(res.data)
-  const name=res.data.data[0]?.name||'Not Available';
-  const access=res.data.data[0]?.access||'Not Available';
-  const image=res.data.data[0]?.image||'Not Available';
-  const carrier=res.data.data[0].phones[0]?.carrier||'Not Available';
-  const city=res.data.data[0].addresses[0]?.city||'Not Available';
-  const email=res.data.data[0].internetAddresses[0]?.id||'Not Available';
-  // console.log(name,email,city,carrier,image,access);
-  const msg=`Mobile Number : ${num} Info\n`+
-  `Name : ${name}\n`+
-  `Email : ${email}\n`+
-  `City : ${city}\n`+
-  `Carrier : ${carrier}\n`+
-  `Image: ${image}`
-  // console.log(msg);
-  sendMessage(sender,msg)
+
 
 }
 
-// Truecaller(6506533576076061,"0000000000")
+// Truecaller(6506533576076061,"ok")
 
 
 
