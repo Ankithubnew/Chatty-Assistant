@@ -22,12 +22,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "googleapis": "^118.0.0",
     "mongoose": "^7.2.1",
     "openai": "^3.2.1",
-    "truecallerjs": "^2.0.1",
-    "youtube-api": "^3.0.1",
-    "youtube-browser-api": "^0.0.9",
     "youtube-transcript": "^1.0.6",
     "youtube-transcript-axios": "^1.0.7"
   }
