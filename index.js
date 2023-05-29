@@ -395,12 +395,12 @@ async function Truecaller(sender,num){
   }
   const res=await axios.get(url,{params,headers});
   console.log(res.data)
-  const name=res.data.data[0].name||'Not Available';
-  const access=res.data.data[0].access||'Not Available';
-  const image=res.data.data[0].image||'Not Available';
-  const carrier=res.data.data[0].phones[0].carrier||'Not Available';
-  const city=res.data.data[0].addresses[0].city||'Not Available';
-  const email=res.data.data[0].internetAddresses[0].id||'Not Available';
+  const name=res.data.data[0]?.name||'Not Available';
+  const access=res.data.data[0]?.access||'Not Available';
+  const image=res.data.data[0]?.image||'Not Available';
+  const carrier=res.data.data[0].phones[0]?.carrier||'Not Available';
+  const city=res.data.data[0].addresses[0]?.city||'Not Available';
+  const email=res.data.data[0].internetAddresses[0]?.id||'Not Available';
   // console.log(name,email,city,carrier,image,access);
   const msg=`Mobile Number : ${num} Info\n`+
   `Name : ${name}\n`+
@@ -413,7 +413,7 @@ async function Truecaller(sender,num){
 
 }
 
-// Truecaller(6506533576076061,"8434086482")
+// Truecaller(6506533576076061,"0000000000")
 
 
 
