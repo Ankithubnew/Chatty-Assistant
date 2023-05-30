@@ -1,4 +1,6 @@
 const openAi = require("openai");
+const transcript = require("youtube-transcript");
+const { YoutubeTranscript } = transcript;
 const { Configuration, OpenAIApi } = openAi;
 const config = new Configuration({ apiKey: process.env.OpenAi_Api });
 const ai = new OpenAIApi(config);
