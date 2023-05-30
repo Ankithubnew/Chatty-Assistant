@@ -2,7 +2,7 @@ const openAi = require("openai");
 const { Configuration, OpenAIApi } = openAi;
 const config = new Configuration({ apiKey: process.env.OpenAi_Api });
 const ai = new OpenAIApi(config);
-const {sendMessage,sendImage} = require("../Controllers/webhookController")
+const {sendMessage,sendImage} = require("../Controllers/webhookController.js")
 async function handleAimsg(sender, msg) {
   console.log("ai assitant with msg called");
   try {

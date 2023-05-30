@@ -2,7 +2,7 @@ const axios = require("axios");
 const transcript = require("youtube-transcript");
 const { YoutubeTranscript } = transcript;
 const User=require("../Models/User")
-const {SummerizeIt}=require("../Services/openAiServices")
+const {SummerizeIt}=require("../Services/openAiServices.js")
 
 async function sendMessage(sender, msg) {
   console.log("sendmsg :" + msg);
