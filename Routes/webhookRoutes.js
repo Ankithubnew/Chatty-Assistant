@@ -4,7 +4,7 @@ const User = require("../Models/User")
 const {sendMessage,getTranscript,handleCredit,Truecaller}=require("../Controllers/webhookController")
 const {handleAimsg,handleAiImage}=require("../Services/openAiServices")
 
-router.get("/webhook", (req, res) => {
+router.get("/", (req, res) => {
   const challenge = req.query["hub.challenge"];
   const verify_token = req.query["hub.verify_token"];
   const hubmode = req.query["hub.mode"];
@@ -15,7 +15,7 @@ router.get("/webhook", (req, res) => {
   }
 });
 
-router.post("/webhook", async (req, res) => {
+router.post("/", async (req, res) => {
   let body = req.body;
   if (body.object === "page") {
     const webhookEvent = body.entry[0].messaging[0];
