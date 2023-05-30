@@ -56,6 +56,21 @@ async function handleAiImage(sender, prompt) {
   }
 }
 
+async function getTranscript(sender, link) {
+  try {
+    console.log("transcript start");
+    let res = await YoutubeTranscript.fetchTranscript(link);
+    if (!res) {
+      res = await YoutubeTranscript.fetchTranscript(link);
+    }
+    let ts = res.map((line) => line.text).join(" ");
+    console.log("transcript done");
+    SummerizeIt(sender, ts);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function SummerizeIt(sender, msg) {
   try {
     console.log("summerize start");
@@ -75,4 +90,4 @@ async function SummerizeIt(sender, msg) {
   }
 }
 
-module.exports={handleAimsg,handleAiImage,SummerizeIt}
+module.exports={handleAimsg,handleAiImage,SummerizeIt,getTranscript}

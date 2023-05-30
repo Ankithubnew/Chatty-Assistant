@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../Models/User")
-const {sendMessage,getTranscript,handleCredit,Truecaller}=require("../Controllers/webhookController")
-const {handleAimsg,handleAiImage}=require("../Services/openAiServices")
+const {sendMessage,handleCredit,Truecaller}=require("../Controllers/webhookController")
+const {handleAimsg,handleAiImage,getTranscript}=require("../Services/openAiServices")
 
 router.get("/", (req, res) => {
   const challenge = req.query["hub.challenge"];

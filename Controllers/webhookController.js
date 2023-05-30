@@ -2,7 +2,6 @@ const axios = require("axios");
 const transcript = require("youtube-transcript");
 const { YoutubeTranscript } = transcript;
 const User=require("../Models/User")
-const {SummerizeIt}=require("../Services/openAiServices")
 
 async function sendMessage(sender, msg) {
   console.log("sendmsg :" + msg);
@@ -50,20 +49,20 @@ async function sendImage(sender, url) {
   console.log("img  sent");
 }
 
-async function getTranscript(sender, link) {
-  try {
-    console.log("transcript start");
-    let res = await YoutubeTranscript.fetchTranscript(link);
-    if (!res) {
-      res = await YoutubeTranscript.fetchTranscript(link);
-    }
-    let ts = res.map((line) => line.text).join(" ");
-    console.log("transcript done");
-    SummerizeIt(sender, ts);
-  } catch (error) {
-    console.log(error);
-  }
-}
+// async function getTranscript(sender, link) {
+//   try {
+//     console.log("transcript start");
+//     let res = await YoutubeTranscript.fetchTranscript(link);
+//     if (!res) {
+//       res = await YoutubeTranscript.fetchTranscript(link);
+//     }
+//     let ts = res.map((line) => line.text).join(" ");
+//     console.log("transcript done");
+//     SummerizeIt(sender, ts);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 // async function getTranscript2(sender, link) {
 //   console.log("transscipt start with 2");
@@ -175,4 +174,4 @@ async function handleCredit(sender, msg) {
 
 
 
-module.exports={sendMessage,sendImage,getTranscript,handleCredit,Truecaller}
+module.exports={sendMessage,sendImage,handleCredit,Truecaller}
