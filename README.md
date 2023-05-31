@@ -21,42 +21,50 @@ Chatty Assistant is a Facebook Messenger AI assistant that performs various task
 #### 1. First-Time User Experience
 *When a user interacts with the bot for the first time, they receive a welcome message explaining the bot's features and how it can assist them.*
 
-![First-Time User Experience](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/cdd5bb31-57b7-44a9-93da-46fb8ccd303a)
+![First-Time User Experience](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/d85d9731-1ade-4f31-870b-6dc1c8c97761)
+
 
 #### 2. Clicking on "Get Started"
 *After clicking on the "Get Started" button, the bot responds with a greeting and an introduction to the features it offers.*
 
-![Clicking on "Get Started](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/d35c7f30-1056-4d0f-8292-16c84f3a5881)
+![Clicking on "Get Started](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/0dd7a3f0-ef66-4b2d-b544-26c2693aae4a)
+
 
 #### 3. Remembering Previous Payloads
 *Chatty Assistant remembers the user's previous payload and provides personalized responses based on that context.*
 
-![Remembering Previous Payloads](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/4e7e95f9-ecef-435f-b9d8-1f0d58fdd713)
+![Remembering Previous Payloads](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/1a5feb41-5105-4db0-84d6-8b2f73b465ba)
+
 
 #### 4. Image Generation
 *Users can prompt the bot to generate images using the OpenAI API. Here, the bot generates an image based on the user's input.*
 
-![Image Generation](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/d14ca0fc-2267-4646-9bdc-9cfcde085084)
+![Image Generation](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/cbd4e39c-65a3-4d28-b7f6-345adf15f287)
+
 
 #### 5. YouTube Video Summarization
 *Chatty Assistant fetches the transcript of a YouTube video and uses the ChatGPT model to summarize its content.*
 
-![YouTube Video Summarization](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/b7501ba3-bb53-442b-9de1-6d4538a76b8e)
+![YouTube Video Summarization](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/6e9e9a1b-498a-4594-8f3c-981182ca4099)
+
 
 #### 6. Truecaller Integration
 *Users can utilize the Truecaller feature to retrieve information about Indian phone numbers available on the Truecaller platform.*
 
-![Truecaller Integration](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/512d83b6-43d7-4893-b22f-6e29f1db59ab)
+![Truecaller Integration](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/431e8a85-0177-44d6-8091-cf1a29ef42a9)
+
 
 #### 7. Credit-based System
 *Chatty Assistant employs a credit-based system, where users start with 5 credits. Each feature usage deducts 1 credit. Users can check their remaining credits and refill them using promo codes.*
 
-![Credit-based System](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/4dadd0b8-1bc8-4ac4-9846-393e3d55e393)
+![Credit-based System](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/8ddc20ea-0324-4017-bd1d-ec059df11d6d)
+
 
 #### 8. Admin Postback
 *The admin postback feature redirects users to Ankit's portfolio, showcasing his work as an admin.*
 
-![Admin Postback](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/87196918-a648-4a1a-8ed6-64c2956cdd82)
+![Admin Postback](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/57d65749-f6de-40d9-953e-7b0e0d760284)
+
 
 ## Getting Started
 
