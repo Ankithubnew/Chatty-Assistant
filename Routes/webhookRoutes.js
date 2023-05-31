@@ -54,6 +54,11 @@ router.post("/", async (req, res) => {
             senderId,
             "You have selected to generate images with prompts. Please provide a prompt for image generation."
           );
+        }else if (payload === "GET_STARTED_PAYLOAD") {
+          sendMessage(
+            senderId,
+            "Welcome to Chatty Assistant!\n\nHere are some features:\n- Chat with Ai Assitant\n- Image generation with prompt\n- YouTube video summarization\n- Truecaller integration\n- Credit-based system\n\nGo ahead and try out these exciting features!"
+          );
         } else if (payload === "GENERATE_SUMMARY_PAYLOAD") {
           const upd = await User.findOneAndUpdate(
             { userId: senderId },
