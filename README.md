@@ -33,7 +33,8 @@ Chatty Assistant is a Facebook Messenger AI assistant that performs various task
 #### 3. Remembering Previous Payloads
 *Chatty Assistant remembers the user's previous payload and provides personalized responses based on that context.*
 
-![Remembering Previous Payloads](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/1a5feb41-5105-4db0-84d6-8b2f73b465ba)
+![Remembering Previous Payloads](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/881dc3cd-2976-4ba5-aecc-9917b85047f0)
+
 
 
 #### 4. Image Generation
