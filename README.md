@@ -26,16 +26,17 @@ Chatty Assistant is a Facebook Messenger AI assistant that performs various task
 ![First-Time User Experience](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/d85d9731-1ade-4f31-870b-6dc1c8c97761)
 
 
-#### 2. Chat with Ai Assitant
+#### 2. Clicking on "Get Started"
+*After clicking on the "Get Started" button, the bot responds with a greeting and an introduction to the features it offers.*
+
+![Clicking on "Get Started](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/0dd7a3f0-ef66-4b2d-b544-26c2693aae4a)
+
+
+#### 3. Chat with Ai Assitant
 *Users can engage in a conversation with the AI assistant, asking questions or providing prompts. The bot uses the OpenAI API to generate relevant responses.*
 
 ![Chat_with_Ai_Assitant](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/b2511fd5-d345-4047-8f21-6bf2380a3c74)
 
-
-#### 3. Clicking on "Get Started"
-*After clicking on the "Get Started" button, the bot responds with a greeting and an introduction to the features it offers.*
-
-![Clicking on "Get Started](https://github.com/Ankithubnew/Chatty-Assistant/assets/120358743/0dd7a3f0-ef66-4b2d-b544-26c2693aae4a)
 
 
 #### 4. Remembering Previous Payloads
