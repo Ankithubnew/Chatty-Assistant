@@ -6,17 +6,15 @@ Chatty Assistant is a Facebook Messenger AI assistant that performs various task
 
 1. **Remember Previous Payload**: Chatty Assistant remembers the user's previous payload and utilizes it to provide personalized responses.
 
-2. **Payload-based Responses**: The bot responds to user payloads and provides appropriate replies based on the received payload.
+2. **Image Generation**: Chatty Assistant can generate images based on user prompts using the OpenAI API. Simply provide a prompt, and the assistant will create an image accordingly.
 
-3. **Image Generation**: Chatty Assistant can generate images based on user prompts using the OpenAI API. Simply provide a prompt, and the assistant will create an image accordingly.
+3. **YouTube Video Summarization**: Chatty Assistant can summarize YouTube videos by fetching their transcripts and using the ChatGPT model to generate concise summaries.
 
-4. **YouTube Video Summarization**: Chatty Assistant can summarize YouTube videos by fetching their transcripts and using the ChatGPT model to generate concise summaries.
+4. **Truecaller Integration**: Chatty Assistant offers a Truecaller feature that allows users to retrieve information about Indian phone numbers available on the Truecaller platform.
 
-5. **Truecaller Integration**: Chatty Assistant offers a Truecaller feature that allows users to retrieve information about Indian phone numbers available on the Truecaller platform.
+5. **Credit-based System**: The assistant employs a credit-based system, where users are initially provided with 5 credits. Each feature usage deducts 1 credit. Users can check their remaining credits and refill them using promo codes.
 
-6. **Credit-based System**: The assistant employs a credit-based system, where users are initially provided with 5 credits. Each feature usage deducts 1 credit. Users can check their remaining credits and refill them using promo codes.
-
-7. **Admin Postback**: Chatty Assistant includes an admin postback feature that redirects users to Ankit's portfolio, showcasing his work as an admin.
+6. **Admin Postback**: Chatty Assistant includes an admin postback feature that redirects users to Ankit's portfolio, showcasing his work as an admin.
 
 ## Getting Started
 
@@ -50,10 +48,6 @@ Make sure to install these dependencies by running `npm install` before starting
 ## Contributions
 
 Contributions to Chatty Assistant are welcome! If you find any issues or have suggestions for improvements, please feel free to submit a pull request or open an issue on the GitHub repository.
-
-## License
-
-Chatty Assistant is released under the [MIT License](https://opensource.org/licenses/MIT). You are free to use, modify, and distribute the code as per the terms of the license.
 
 ## Contact
 
