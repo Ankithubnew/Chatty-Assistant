@@ -72,7 +72,7 @@ To get started with Chatty Assistant, follow these steps:
 
 Once the application is up and running, users can interact with Chatty Assistant through Facebook Messenger.
 However, please note that Facebook imposes certain restrictions and verification processes for public access to Messenger bots.
-Please be aware that until your Messenger bot successfully completes the review process and gets approved by Facebook, it may not be accessible to the public.
+Please be aware that until this Messenger bot successfully completes the review process and gets approved by Facebook, it may not be accessible to the public.
 
 Demo: [Facebook Page](https://www.facebook.com/profile.php?id=100092560165020)
 
